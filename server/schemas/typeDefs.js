@@ -19,6 +19,7 @@ const typeDefs = gql`
 
     type Mutation {
         addItem(itemName: String!, itemCategory: String!): Item! 
+        addCategory(categoryName: String!): Category!
    
     }
 `;

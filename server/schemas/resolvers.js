@@ -1,5 +1,6 @@
 const { ApolloError } = require("apollo-server-express");
 const Item = require('../models/Item');
+const Category = require('../models/Category');
 
 const resolvers = {
     Query: {
@@ -20,6 +21,12 @@ const resolvers = {
                 itemCategory
             });
         },
+
+        async addCategory(_, {categoryName}) {
+            return await Category.create({
+                categoryName
+            });
+        }
 
         // async deleteItem(_, args) {
         //     const { id } = args;
