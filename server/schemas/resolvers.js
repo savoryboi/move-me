@@ -11,15 +11,32 @@ const resolvers = {
             console.log(args)
             const item = await Item.findById(args.id);
             return item;
+        },
+        async getAllCategories() {
+            return await Category.find().populate("categoryItems")
+        }, 
+        async getOneCategory(_, args) {
+            const category = await Category.findById(args.id)
+            return category;
         }
     },
 
     Mutation: {
-        async addItem(_, {itemName, itemCategory}) {
-            return await Item.create({
-                itemName,
-                itemCategory
-            });
+        async addItem(_, args) {
+            const { itemName, itemCategory } = args;
+      
+            // Create the item
+            const newItem = await Item.create({ itemName, itemCategory });
+            
+            // Update the associated category
+            const category = await Category.findById(itemCategory);
+            if (!category) {
+              throw new Error('Category not found');
+            }
+            category.categoryItems.push(newItem._id);
+            await category.save();
+            
+            return newItem;
         },
 
         async addCategory(_, {categoryName}) {
@@ -27,11 +44,6 @@ const resolvers = {
                 categoryName
             });
         }
-
-        // async deleteItem(_, args) {
-        //     const { id } = args;
-        //     return await Item.deleteOne({_id: id});
-        // }
     }
 }
 

@@ -4,7 +4,7 @@ const typeDefs = gql`
     type Item {
         _id: ID!
         itemName: String!
-        itemCategory: String!
+        itemCategory: ID!
     }
     type Category {
         _id: ID!
@@ -15,10 +15,12 @@ const typeDefs = gql`
     type Query {
         getAllItems: [Item]
         getOneItem(id: ID!): Item
+        getAllCategories: [Category]
+        getOneCategory(id:ID!): Category
     }
 
     type Mutation {
-        addItem(itemName: String!, itemCategory: String!): Item! 
+        addItem(itemName: String!, itemCategory: ID!): Item! 
         addCategory(categoryName: String!): Category!
    
     }

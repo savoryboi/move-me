@@ -8,7 +8,8 @@ const itemSchema = new Schema({
         max: 100
     }, 
     itemCategory: {
-        type: String, 
+        type: Schema.Types.ObjectId,
+        ref: "Category", 
         required: true, 
         min: 1,
         max: 100
