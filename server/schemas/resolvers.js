@@ -16,7 +16,7 @@ const resolvers = {
             return await Category.find().populate("categoryItems")
         }, 
         async getOneCategory(_, args) {
-            const category = await Category.findById(args.id)
+            const category = await Category.findById(args.id).populate("categoryItems")
             return category;
         }
     },
